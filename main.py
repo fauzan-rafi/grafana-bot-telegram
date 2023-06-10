@@ -4,12 +4,12 @@ import shutil
 
 # Configuration Variable
 # [GRAFANA]
-HOST="44.199.216.28"
+HOST=""
 PORT="3000"
-API_KEY="eyJrIjoiUG4zSXpxWnN2RkQwaTVWMEU1akE3ODJuOVpWb1FIb0YiLCJuIjoidGVsZWdyYW0iLCJpZCI6MX0="
+API_KEY=""
 
 # [PANEL_IMAGE]
-DASHBOARD_UID="lQ3U-gWZk"
+DASHBOARD_UID=""
 FROM_DATE="now-5m"
 TO_DATE="now"
 ORG_ID="1"
@@ -18,11 +18,11 @@ HEIGHT="400"
 TZ="Asia/Jakarta"
 
 # [TELEGRAM]
-BOT_TOKEN="6217434453:AAHYkokNNqZA1RdTpfvxDT-ygufb_O8nclo"
-CHAT_ID="-813327219"
+BOT_TOKEN=""
+CHAT_ID=""
 
 # [TEMP_STORAGE]
-FILE_PATH=r"D:\HOME\UNY\Semester_6\Proyek Mandiri\grafana-bot-image\rendered\image.png"
+FILE_PATH=r""
 
 # End of Configuration Variable
 
