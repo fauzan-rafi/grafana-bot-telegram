@@ -4,54 +4,60 @@ import shutil
 
 # Configuration Variable
 # [GRAFANA]
-HOST="44.199.216.28"
-PORT="3000"
-API_KEY="eyJrIjoiUG4zSXpxWnN2RkQwaTVWMEU1akE3ODJuOVpWb1FIb0YiLCJuIjoidGVsZWdyYW0iLCJpZCI6MX0="
+HOST = "YOUR-HOST"
+PORT = "3000"
+API_KEY = "YOUR_API_GRAFANA"
 
 # [PANEL_IMAGE]
-DASHBOARD_UID="lQ3U-gWZk"
-FROM_DATE="now-5m"
-TO_DATE="now"
-ORG_ID="1"
-WIDTH="900"
-HEIGHT="400"
-TZ="Asia/Jakarta"
+DASHBOARD_UID = "YOUR_DASHBOARD_ID"
+FROM_DATE = "now-5m"
+TO_DATE = "now"
+ORG_ID = "1"
+WIDTH = "900"
+HEIGHT = "400"
+TZ = "Asia/Jakarta"
 
 # [TELEGRAM]
-BOT_TOKEN="6217434453:AAHYkokNNqZA1RdTpfvxDT-ygufb_O8nclo"
-CHAT_ID="-813327219"
+BOT_TOKEN = "YOUR_BOT_TOKEN"
+CHAT_ID = "YOUR_GROUP_CHAT_ID"
 
 # [TEMP_STORAGE]
-FILE_PATH=r"D:\HOME\UNY\Semester_6\Proyek Mandiri\grafana-bot-image\rendered\image.png"
+FILE_PATH = r"rendered/image.png"
 
 # End of Configuration Variable
+
 
 def handle_command(command):
     if command.startswith("/get"):
         panel_id = command.split(" ")[1]
         panel_id = check_value_message(panel_name=panel_id)
         download = get_grafana_snapshot(panel_id)
-        if download :
+        if download:
             send_telegram_photo(FILE_PATH)
         else:
             message = "Failed to fetch snapshot from Grafana API"
             send_telegram_message(message)
 
+
 def send_telegram_photo(image_path):
     bot = telegram.Bot(token=BOT_TOKEN)
     bot.send_photo(chat_id=CHAT_ID, photo=open(image_path, 'rb'))
+
 
 def send_telegram_message(message):
     bot = telegram.Bot(token=BOT_TOKEN)
     bot.send_message(chat_id=CHAT_ID, text=message)
 
+
 def check_value_message(panel_name):
-    listPanel = {"cpu":20,"ram":16,"disk":154,"status_server":281} # YOU MUST CUSTOMISE WITH YOUR ENVIRONMENT
+    listPanel = {"usage_cpu": 20, "cpu_core": 14, "usage_ram": 16, "total_ram": 75, "total_fs": 2, "usage_disk": 154,
+                 "network_traffic": 60, "status_server": 281, "server_uptime": 15}  # YOU MUST CUSTOMISE WITH YOUR ENVIRONMENT
+
     for x in listPanel:
         if x == panel_name:
             panel_id = listPanel[x]
     return panel_id
-        
+
 
 def get_grafana_snapshot(panel_id):
     try:
@@ -71,12 +77,14 @@ def get_grafana_snapshot(panel_id):
                 shutil.copyfileobj(response.raw, image_file)
             return True
         else:
-            print(f"Error fetching snapshot from Grafana API: {response.status_code}")
+            print(
+                f"Error fetching snapshot from Grafana API: {response.status_code}")
             return None
-        
+
     except requests.exceptions.RequestException as e:
         print(f"Error fetching snapshot from Grafana API: {e}")
         return None
+
 
 # Main Function
 if __name__ == '__main__':

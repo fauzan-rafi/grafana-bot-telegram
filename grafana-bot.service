@@ -1,0 +1,14 @@
+[Unit]
+Description="Grafana Bot Telegram"
+
+[Service]
+User=grafana-bot
+Group=grafana-bot
+WorkingDirectory=/home/bot/grafana-bot-telegram/
+VIRTUAL_ENV=/home/bot/grafana-bot-telegram/env
+Environment=PATH=$VIRTUAL_ENV/bin:$PATH
+ExecStart=/home/bot/grafana-bot-telegram/env/bin/python main.py
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
